@@ -2,6 +2,8 @@ public class Main
 {
     void main()
     {
-        Tokenizer.tokenize("expression.txt");
+        Tokenizer tokenizer = new Tokenizer();
+        
+        tokenizer.tokenize("expression.txt");
     }
 }

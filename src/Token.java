@@ -33,4 +33,10 @@ public class Token
     {
         return literal;
     }
+    
+    @Override
+    public String toString()
+    {
+        return ("Token Type: " + type + ", Literal Value: " + literal);
+    }
 }
