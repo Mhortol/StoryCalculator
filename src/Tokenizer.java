@@ -27,7 +27,9 @@ public class Tokenizer
         
         while(!source.isEmpty())
         {
-        
+            Token token = nextToken();
+            
+            System.out.println(token.toString());
         }
         
         return list;
@@ -61,6 +63,8 @@ public class Tokenizer
         {
             String tokenText = matcher.group();
             
+            int length = tokenText.length();
+            
             switch (tokenText)
             {
                 case String string when numberLiteral.matcher(tokenText).matches():
@@ -68,15 +72,31 @@ public class Tokenizer
                     break;
                 case String string when plus.matcher(tokenText).matches():
                     token = new Token(TokenType.PLUS);
+                    if (source.substring(length, length + 3).equals("by "))
+                    {
+                        length+=3;
+                    }
                     break;
                 case String string when minus.matcher(tokenText).matches():
                     token = new Token(TokenType.MINUS);
+                    if (source.substring(length, length + 3).equals("by "))
+                    {
+                        length+=3;
+                    }
                     break;
                 case String string when star.matcher(tokenText).matches():
                     token = new Token(TokenType.STAR);
+                    if (source.substring(length, length + 3).equals("by "))
+                    {
+                        length+=3;
+                    }
                     break;
                 case String string when slash.matcher(tokenText).matches():
                     token = new Token(TokenType.SLASH);
+                    if (source.substring(length, length + 3).equals("by "))
+                    {
+                        length+=3;
+                    }
                     break;
                 case String string when leftParen.matcher(tokenText).matches():
                     token = new Token(TokenType.LEFT_PAREN);
@@ -87,7 +107,8 @@ public class Tokenizer
                 default:
                     break;
             }
-            source = source.substring(tokenText.length());
+            
+            source = source.substring(length);
             
         }
         
