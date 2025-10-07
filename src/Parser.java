@@ -37,7 +37,14 @@ public class Parser
     {
         Expression expression = factor();
         
-        
+        while (match(TokenType.MINUS, TokenType.PLUS))
+        {
+            Token operator = previous();
+            
+            Expression right = factor();
+            
+            expression = new Expression.Binary(expression, operator, right);
+        }
         
         return expression;
     }
@@ -46,21 +53,38 @@ public class Parser
     {
         Expression expression = unary();
         
-        
+        while (match(TokenType.SLASH, TokenType.STAR))
+        {
+            Token operator = previous();
+            
+            Expression right = unary();
+            
+            expression = new Expression.Binary(expression, operator, right);
+        }
         
         return expression;
     }
     
     private Expression unary()
     {
-        
+        if (match(TokenType.MINUS))
+        {
+            Token operator = previous();
+            
+            Expression right = unary();
+            
+            return new Expression.Unary(operator, right);
+        }
         
         return primary();
     }
     
     private Expression primary()
     {
-        
+        if (match(TokenType.NUMBER))
+        {
+            return new Expression.Literal(previous().getLiteral());
+        }
         
         return null;
     }
