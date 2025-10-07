@@ -29,7 +29,7 @@ public class Tokenizer
         {
             Token token = nextToken();
             
-            System.out.println(token.toString());
+            list.add(token);
         }
         
         return list;
@@ -72,31 +72,19 @@ public class Tokenizer
                     break;
                 case String string when plus.matcher(tokenText).matches():
                     token = new Token(TokenType.PLUS);
-                    if (source.substring(length, length + 3).equals("by "))
-                    {
-                        length+=3;
-                    }
+                    length = checkBy(length);
                     break;
                 case String string when minus.matcher(tokenText).matches():
                     token = new Token(TokenType.MINUS);
-                    if (source.substring(length, length + 3).equals("by "))
-                    {
-                        length+=3;
-                    }
+                    length = checkBy(length);
                     break;
                 case String string when star.matcher(tokenText).matches():
                     token = new Token(TokenType.STAR);
-                    if (source.substring(length, length + 3).equals("by "))
-                    {
-                        length+=3;
-                    }
+                    length = checkBy(length);
                     break;
                 case String string when slash.matcher(tokenText).matches():
                     token = new Token(TokenType.SLASH);
-                    if (source.substring(length, length + 3).equals("by "))
-                    {
-                        length+=3;
-                    }
+                    length = checkBy(length);
                     break;
                 case String string when leftParen.matcher(tokenText).matches():
                     token = new Token(TokenType.LEFT_PAREN);
@@ -113,5 +101,15 @@ public class Tokenizer
         }
         
         return token;
+    }
+    
+    private int checkBy(int length)
+    {
+        if (source.startsWith("by ", length))
+        {
+            length+=3;
+        }
+        
+        return length;
     }
 }
