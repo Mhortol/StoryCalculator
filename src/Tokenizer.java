@@ -30,7 +30,11 @@ public class Tokenizer
             Token token = nextToken();
             
             list.add(token);
+            
+            System.out.println(token.toString());
         }
+        
+        list.add(new Token(TokenType.EOF));
         
         return list;
     }
