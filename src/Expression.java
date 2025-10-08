@@ -12,6 +12,12 @@ public abstract class Expression
             this.operator = operator;
             this.right = right;
         }
+
+        @Override
+        public String toString()
+        {
+            return ("(" + left.toString() + " " + operator.toString() + " " + right.toString() + ")");
+        }
     }
     
     static class Literal extends Expression
@@ -21,6 +27,12 @@ public abstract class Expression
         public Literal(Double literal)
         {
             this.literal = literal;
+        }
+
+        @Override
+        public String toString()
+        {
+            return ("(" + literal.toString() + ")");
         }
     }
     
@@ -33,6 +45,12 @@ public abstract class Expression
         {
             this.operator = operator;
             this.right = right;
+        }
+
+        @Override
+        public String toString()
+        {
+            return ("(" + operator.toString() + " " +right.toString() + ")");
         }
     }
 }

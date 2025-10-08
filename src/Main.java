@@ -1,11 +1,17 @@
+import java.util.ArrayList;
+
 public class Main
 {
-    void main()
+    public static void main(String[] args)
     {
         Tokenizer tokenizer = new Tokenizer();
         
-        tokenizer.tokenize("expression.txt");
+        ArrayList<Token> tokens = tokenizer.tokenize("expression.txt");
+
+        Parser parser = new Parser(tokens);
+
+        Expression expression = parser.parse();
+
+        System.out.println(expression.toString());
     }
-    
-    
 }

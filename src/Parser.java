@@ -9,6 +9,12 @@ public class Parser
     {
         this.tokens = tokens;
     }
+
+    public Expression parse()
+    {
+        return expression();
+    }
+
     
     private Expression expression()
     {
