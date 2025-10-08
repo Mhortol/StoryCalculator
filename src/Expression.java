@@ -95,7 +95,7 @@ public abstract class Expression
 
     public static class Grouping extends Expression
     {
-        final Expression expression;
+        private final Expression expression;
 
         public Grouping(Expression expression)
         {
@@ -111,6 +111,21 @@ public abstract class Expression
         public String toString()
         {
             return expression.toString();
+        }
+    }
+
+    public static class Variable extends Expression
+    {
+        private final Token name;
+
+        public Variable(Token name)
+        {
+            this.name = name;
+        }
+
+        public Object evaluate()
+        {
+            return Environment.get(name);
         }
     }
 }

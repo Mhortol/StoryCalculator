@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class Interpreter
 {
+   //private Environment environment = new Environment();
+
    /*private final Expression expression;
 
    public Interpreter(Expression expression)

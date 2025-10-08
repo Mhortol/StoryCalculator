@@ -1,1 +1,1 @@
-Say 2 increased by 3 divided by 2. Say 5. Say (-5 multiplied by 2).
+Say 2 increased by 3 divided by 2. Say 5. Say (-5 multiplied by 2). There are 10 apples. Say apples. Say apples increased by 2.

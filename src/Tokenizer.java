@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 public class Tokenizer
 {
     private final Pattern numberLiteral = Pattern.compile("([0-9]+|[0-9]+\\.[0-9]+)");
+    private final Pattern identifierLiteral = Pattern.compile("[a-zA-Z]+");
     
     private String source;
     
@@ -105,6 +106,9 @@ public class Tokenizer
                     break;
                 case "is", "are":
                     token = new Token(TokenType.IS);
+                    break;
+                case String string when identifierLiteral.matcher(tokenText).matches():
+                    token = new Token(string, TokenType.IDENTIFIER);
                     break;
                 default:
                     break;

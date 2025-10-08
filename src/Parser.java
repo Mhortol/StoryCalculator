@@ -20,7 +20,7 @@ public class Parser
         ArrayList<Statement> statements = new ArrayList<Statement>();
         while(!isAtEnd())
         {
-            statements.add(statement());
+            statements.add(declaration());
         }
 
         return  statements;
@@ -52,6 +52,28 @@ public class Parser
         consume(TokenType.DOT, "Expect '.' after value.");
 
         return new Statement.StatementExpression(expression);
+    }
+
+    private Statement declaration()
+    {
+        if (match(TokenType.VAR))
+        {
+            return varDeclaration();
+        }
+
+        return statement();
+    }
+
+    private Statement varDeclaration()
+    {
+        Expression initializer = null;
+
+        initializer = expression();
+
+        Token name = consume(TokenType.IDENTIFIER, "Expect variable name after value");
+        consume(TokenType.DOT, "Expect '.' after variable declaration.");
+
+        return new Statement.Variable(name, initializer);
     }
 
 
@@ -137,6 +159,11 @@ public class Parser
             Expression expression = expression();
             consume(TokenType.RIGHT_PAREN, "Expect ')' after expression.");
             return new Expression.Grouping(expression);
+        }
+
+        if (match(TokenType.IDENTIFIER))
+        {
+            return new Expression.Variable(previous());
         }
         
         return null;
