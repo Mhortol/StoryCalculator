@@ -7,16 +7,6 @@ import java.util.regex.Pattern;
 public class Tokenizer
 {
     private final Pattern numberLiteral = Pattern.compile("([0-9]+|[0-9]+\\.[0-9]+)");
-    private final Pattern increased = Pattern.compile("increased");
-    private final Pattern decreased = Pattern.compile("decreased");
-    private final Pattern multiplied = Pattern.compile("multiplied");
-    private final Pattern divided = Pattern.compile("divided");
-    private final Pattern by = Pattern.compile("by");
-    private final Pattern print = Pattern.compile("Say");
-    private final Pattern space = Pattern.compile(" ");
-    private final Pattern dot = Pattern.compile("\\.");
-    private final Pattern leftParen = Pattern.compile("\\(");
-    private final Pattern rightParen = Pattern.compile("\\)");
     
     private String source;
     
@@ -77,38 +67,44 @@ public class Tokenizer
                 case String string when numberLiteral.matcher(tokenText).matches():
                     token = new Token(Double.parseDouble(string), TokenType.NUMBER);
                     break;
-                case String string when increased.matcher(tokenText).matches():
+                case "increased":
                     token = new Token(TokenType.INCREASED);
                     break;
-                case String string when decreased.matcher(tokenText).matches():
+                case "decreased":
                     token = new Token(TokenType.DECREASED);
                     break;
-                case String string when multiplied.matcher(tokenText).matches():
+                case "multiplied":
                     token = new Token(TokenType.MULTIPLIED);
                     break;
-                case String string when divided.matcher(tokenText).matches():
+                case "divided":
                     token = new Token(TokenType.DIVIDED);
                     break;
-                case String string when leftParen.matcher(tokenText).matches():
+                case "(":
                     token = new Token(TokenType.LEFT_PAREN);
                     break;
-                case String string when rightParen.matcher(tokenText).matches():
+                case ")":
                     token = new Token(TokenType.RIGHT_PAREN);
                     break;
-                case String string when by.matcher(tokenText).matches():
+                case "by":
                     token = new Token(TokenType.BY);
                     break;
-                case String string when print.matcher(tokenText).matches():
+                case "Say":
                     token = new Token(TokenType.PRINT);
                     break;
-                case String string when space.matcher(tokenText).matches():
+                case " ":
                     token = new Token(TokenType.SPACE);
                     break;
-                case String string when dot.matcher(tokenText).matches():
+                case ".":
                     token = new Token(TokenType.DOT);
                     break;
                 case "-":
                     token = new Token(TokenType.MINUS);
+                    break;
+                case "There":
+                    token = new Token(TokenType.THERE);
+                    break;
+                case "is", "are":
+                    token = new Token(TokenType.IS);
                     break;
                 default:
                     break;

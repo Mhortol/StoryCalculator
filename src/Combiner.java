@@ -18,17 +18,19 @@ public class Combiner
          switch (tokens.get(current).getType())
          {
             case INCREASED:
-               addCombinedToken(TokenType.PLUS);
+               addCombinedToken(TokenType.PLUS, TokenType.BY);
                break;
             case DECREASED:
-               addCombinedToken(TokenType.MINUS);
+               addCombinedToken(TokenType.MINUS, TokenType.BY);
                break;
             case MULTIPLIED:
-               addCombinedToken(TokenType.STAR);
+               addCombinedToken(TokenType.STAR, TokenType.BY);
                break;
             case DIVIDED:
-               addCombinedToken(TokenType.SLASH);
+               addCombinedToken(TokenType.SLASH, TokenType.BY);
                break;
+            case THERE:
+               addCombinedToken(TokenType.VAR, TokenType.IS);
             case SPACE:
                current++;
                break;
@@ -40,11 +42,11 @@ public class Combiner
       return combinedList;
    }
 
-   private void addCombinedToken(TokenType type)
+   private void addCombinedToken(TokenType typeToAdd, TokenType typeToMatch)
    {
-      if (tokens.get(current + 1).getType() == TokenType.SPACE && tokens.get(current + 2).getType() == TokenType.BY)
+      if (tokens.get(current + 1).getType() == TokenType.SPACE && tokens.get(current + 2).getType() == typeToMatch)
       {
-         combinedList.add(new Token(type));
+         combinedList.add(new Token(typeToAdd));
       }
       current += 3;
    }

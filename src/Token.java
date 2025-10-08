@@ -1,11 +1,11 @@
 public class Token
 {
     private TokenType type;
-    private Double literal = null;
+    private Object value = null;
     
-    public Token(Double literal, TokenType type)
+    public Token(Object value, TokenType type)
     {
-        setLiteral(literal);
+        setValue(value);
         setType(type);
     }
     
@@ -19,9 +19,9 @@ public class Token
         this.type = type;
     }
     
-    public void setLiteral(Double literal)
+    public void setValue(Object value)
     {
-        this.literal = literal;
+        this.value = value;
     }
     
     public TokenType getType()
@@ -29,14 +29,14 @@ public class Token
         return type;
     }
     
-    public Double getLiteral()
+    public Object getValue()
     {
-        return literal;
+        return value;
     }
     
     @Override
     public String toString()
     {
-        return ("Token Type: " + type + ", Literal Value: " + literal);
+        return ("Token Type: " + type + ", Literal Value: " + value);
     }
 }

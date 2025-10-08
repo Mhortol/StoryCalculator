@@ -1,6 +1,6 @@
 public abstract class Expression
 {
-    abstract public Double evaluate();
+    abstract public Object evaluate();
 
     public static class Binary extends Expression
     {
@@ -15,18 +15,18 @@ public abstract class Expression
             this.right = right;
         }
 
-        public Double evaluate()
+        public Object evaluate()
         {
             switch (operator.getType())
             {
                 case TokenType.PLUS:
-                    return left.evaluate() + right.evaluate();
+                    return (Double)left.evaluate() + (Double)right.evaluate();
                 case TokenType.MINUS:
-                    return left.evaluate() - right.evaluate();
+                    return (Double)left.evaluate() - (Double)right.evaluate();
                 case TokenType.STAR:
-                    return left.evaluate() * right.evaluate();
+                    return (Double)left.evaluate() * (Double)right.evaluate();
                 case TokenType.SLASH:
-                    return left.evaluate() / right.evaluate();
+                    return (Double)left.evaluate() / (Double)right.evaluate();
             }
 
             return null;
@@ -41,19 +41,19 @@ public abstract class Expression
     
     public static class Literal extends Expression
     {
-        private final Double value;
+        private final Object value;
         
         public Literal(Double literal)
         {
             this.value = literal;
         }
 
-        public Double getValue()
+        public Object getValue()
         {
             return value;
         }
 
-        public Double evaluate()
+        public Object evaluate()
         {
             return value;
         }
@@ -76,11 +76,11 @@ public abstract class Expression
             this.right = right;
         }
 
-        public Double evaluate()
+        public Object evaluate()
         {
             if (operator.getType() == TokenType.MINUS)
             {
-                return -right.evaluate();
+                return -(Double)right.evaluate();
             }
 
             return right.evaluate();
@@ -102,7 +102,7 @@ public abstract class Expression
             this.expression = expression;
         }
 
-        public Double evaluate()
+        public Object evaluate()
         {
             return expression.evaluate();
         }

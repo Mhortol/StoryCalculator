@@ -129,7 +129,7 @@ public class Parser
     {
         if (match(TokenType.NUMBER))
         {
-            return new Expression.Literal(previous().getLiteral());
+            return new Expression.Literal((Double) previous().getValue());
         }
 
         if (match(TokenType.LEFT_PAREN))

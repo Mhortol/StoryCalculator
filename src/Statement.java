@@ -30,7 +30,7 @@ public abstract class Statement
       @Override
       public void execute()
       {
-         Double value = expression.evaluate();
+         Object value = expression.evaluate();
 
          System.out.println(value);
       }
