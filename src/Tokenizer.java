@@ -6,14 +6,16 @@ import java.util.regex.Pattern;
 
 public class Tokenizer
 {
-    private final Pattern numberLiteral = Pattern.compile("([0-9]+\\.[0-9]+|[0-9]+)[ .]");
-    private final Pattern plus = Pattern.compile("increased ");
-    private final Pattern minus = Pattern.compile("decreased ");
-    private final Pattern star = Pattern.compile("multiplied ");
-    private final Pattern slash = Pattern.compile("divided ");
-    private final Pattern by = Pattern.compile("by ");
+    private final Pattern numberLiteral = Pattern.compile("([0-9]+|[0-9]+\\.[0-9]+)");
+    private final Pattern increased = Pattern.compile("increased");
+    private final Pattern decreased = Pattern.compile("decreased");
+    private final Pattern multiplied = Pattern.compile("multiplied");
+    private final Pattern divided = Pattern.compile("divided");
+    private final Pattern by = Pattern.compile("by");
+    private final Pattern space = Pattern.compile(" ");
+    private final Pattern dot = Pattern.compile("\\.");
     private final Pattern leftParen = Pattern.compile("\\(");
-    private final Pattern rightParen = Pattern.compile("\\)[ .]");
+    private final Pattern rightParen = Pattern.compile("\\)");
     
     private String source;
     
@@ -33,7 +35,7 @@ public class Tokenizer
             
             System.out.println(token.toString());
         }
-        
+
         list.add(new Token(TokenType.EOF));
         
         return list;
@@ -60,7 +62,7 @@ public class Tokenizer
     {
         Token token = null;
         
-        Pattern bite = Pattern.compile("[a-zA-Z1-9.]+[ .]");
+        Pattern bite = Pattern.compile("[a-zA-Z0-9]+|[a-zA-Z0-9]+\\.[a-zA-Z0-9]+| |\\.");
         Matcher matcher = bite.matcher(source);
         
         if (matcher.find())
@@ -74,21 +76,17 @@ public class Tokenizer
                 case String string when numberLiteral.matcher(tokenText).matches():
                     token = new Token(Double.parseDouble(string), TokenType.NUMBER);
                     break;
-                case String string when plus.matcher(tokenText).matches():
-                    token = new Token(TokenType.PLUS);
-                    length = checkBy(length);
+                case String string when increased.matcher(tokenText).matches():
+                    token = new Token(TokenType.INCREASED);
                     break;
-                case String string when minus.matcher(tokenText).matches():
-                    token = new Token(TokenType.MINUS);
-                    length = checkBy(length);
+                case String string when decreased.matcher(tokenText).matches():
+                    token = new Token(TokenType.DECREASED);
                     break;
-                case String string when star.matcher(tokenText).matches():
-                    token = new Token(TokenType.STAR);
-                    length = checkBy(length);
+                case String string when multiplied.matcher(tokenText).matches():
+                    token = new Token(TokenType.MULTIPLIED);
                     break;
-                case String string when slash.matcher(tokenText).matches():
-                    token = new Token(TokenType.SLASH);
-                    length = checkBy(length);
+                case String string when divided.matcher(tokenText).matches():
+                    token = new Token(TokenType.DIVIDED);
                     break;
                 case String string when leftParen.matcher(tokenText).matches():
                     token = new Token(TokenType.LEFT_PAREN);
@@ -96,12 +94,20 @@ public class Tokenizer
                 case String string when rightParen.matcher(tokenText).matches():
                     token = new Token(TokenType.RIGHT_PAREN);
                     break;
+                case String string when by.matcher(tokenText).matches():
+                    token = new Token(TokenType.BY);
+                    break;
+                case String string when space.matcher(tokenText).matches():
+                    token = new Token(TokenType.SPACE);
+                    break;
+                case String string when dot.matcher(tokenText).matches():
+                    token = new Token(TokenType.DOT);
+                    break;
                 default:
                     break;
             }
             
             source = source.substring(length);
-            
         }
         
         return token;

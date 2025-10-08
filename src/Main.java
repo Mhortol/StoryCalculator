@@ -8,6 +8,19 @@ public class Main
         
         ArrayList<Token> tokens = tokenizer.tokenize("expression.txt");
 
+        Combiner combiner =  new Combiner(tokens);
+
+        tokens = new ArrayList<>(combiner.combineTokens());
+
+        System.out.println();
+
+        for (Token token : tokens)
+        {
+            System.out.println(token.toString());
+        }
+
+        System.out.println();
+
         Parser parser = new Parser(tokens);
 
         Expression expression = parser.parse();
