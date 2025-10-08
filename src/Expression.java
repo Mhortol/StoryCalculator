@@ -1,6 +1,8 @@
 public abstract class Expression
 {
-    static class Binary extends Expression
+    abstract public Double evaluate();
+
+    public static class Binary extends Expression
     {
         private final Expression left;
         private final Token operator;
@@ -13,6 +15,23 @@ public abstract class Expression
             this.right = right;
         }
 
+        public Double evaluate()
+        {
+            switch (operator.getType())
+            {
+                case TokenType.PLUS:
+                    return left.evaluate() + right.evaluate();
+                case TokenType.MINUS:
+                    return left.evaluate() - right.evaluate();
+                case TokenType.STAR:
+                    return left.evaluate() * right.evaluate();
+                case TokenType.SLASH:
+                    return left.evaluate() / right.evaluate();
+            }
+
+            return null;
+        }
+
         @Override
         public String toString()
         {
@@ -20,23 +39,33 @@ public abstract class Expression
         }
     }
     
-    static class Literal extends Expression
+    public static class Literal extends Expression
     {
-        private final Double literal;
+        private final Double value;
         
         public Literal(Double literal)
         {
-            this.literal = literal;
+            this.value = literal;
+        }
+
+        public Double getValue()
+        {
+            return value;
+        }
+
+        public Double evaluate()
+        {
+            return value;
         }
 
         @Override
         public String toString()
         {
-            return ("(" + literal.toString() + ")");
+            return ("(" + value.toString() + ")");
         }
     }
     
-    static class Unary extends Expression
+    public static class Unary extends Expression
     {
         private final Token operator;
         private final Expression right;
@@ -45,6 +74,16 @@ public abstract class Expression
         {
             this.operator = operator;
             this.right = right;
+        }
+
+        public Double evaluate()
+        {
+            if (operator.getType() == TokenType.MINUS)
+            {
+                return -right.evaluate();
+            }
+
+            return right.evaluate();
         }
 
         @Override

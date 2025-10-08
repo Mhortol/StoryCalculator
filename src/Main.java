@@ -13,5 +13,9 @@ public class Main
         Expression expression = parser.parse();
 
         System.out.println(expression.toString());
+
+        Interpreter interpreter = new Interpreter(expression);
+
+        System.out.println(interpreter.interpret());
     }
 }
