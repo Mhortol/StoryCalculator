@@ -62,7 +62,7 @@ public class Tokenizer
     {
         Token token = null;
         
-        Pattern bite = Pattern.compile("[a-zA-Z0-9]+|[a-zA-Z0-9]+\\.[a-zA-Z0-9]+| |\\.");
+        Pattern bite = Pattern.compile("[a-zA-Z0-9]+|[a-zA-Z0-9]+\\.[a-zA-Z0-9]+| |\\.|\\(|\\)");
         Matcher matcher = bite.matcher(source);
         
         if (matcher.find())

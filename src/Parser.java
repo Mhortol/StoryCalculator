@@ -91,6 +91,13 @@ public class Parser
         {
             return new Expression.Literal(previous().getLiteral());
         }
+
+        if (match(TokenType.LEFT_PAREN))
+        {
+            Expression expression = expression();
+            consume(TokenType.RIGHT_PAREN, "Expect ')' after expression.");
+            return new Expression.Grouping(expression);
+        }
         
         return null;
     }
@@ -130,6 +137,16 @@ public class Parser
         }
         
         return peek().getType() == type;
+    }
+
+    private Token consume(TokenType type, String message)
+    {
+        if (check(type))
+        {
+            return advance();
+        }
+
+        return null;
     }
     
     private boolean match(TokenType... types)

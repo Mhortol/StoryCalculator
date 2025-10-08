@@ -92,4 +92,25 @@ public abstract class Expression
             return ("(" + operator.toString() + " " +right.toString() + ")");
         }
     }
+
+    public static class Grouping extends Expression
+    {
+        final Expression expression;
+
+        public Grouping(Expression expression)
+        {
+            this.expression = expression;
+        }
+
+        public Double evaluate()
+        {
+            return expression.evaluate();
+        }
+
+        @Override
+        public String toString()
+        {
+            return expression.toString();
+        }
+    }
 }
