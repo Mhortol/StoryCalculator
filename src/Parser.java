@@ -10,10 +10,50 @@ public class Parser
         this.tokens = tokens;
     }
 
-    public Expression parse()
+    public Expression parseOld()
     {
         return expression();
     }
+
+    public ArrayList<Statement> parse()
+    {
+        ArrayList<Statement> statements = new ArrayList<Statement>();
+        while(!isAtEnd())
+        {
+            statements.add(statement());
+        }
+
+        return  statements;
+    }
+
+
+
+    private Statement statement()
+    {
+        if (match(TokenType.PRINT))
+        {
+            return printStatement();
+        }
+
+        return expressionStatement();
+    }
+
+    private Statement printStatement()
+    {
+        Expression value = expression();
+        consume(TokenType.DOT, "Expect '.' after value.");
+
+        return new Statement.Print(value);
+    }
+
+    private Statement expressionStatement()
+    {
+        Expression expression = expression();
+        consume(TokenType.DOT, "Expect '.' after value.");
+
+        return new Statement.StatementExpression(expression);
+    }
+
 
     
     private Expression expression()

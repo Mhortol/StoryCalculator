@@ -12,6 +12,7 @@ public class Tokenizer
     private final Pattern multiplied = Pattern.compile("multiplied");
     private final Pattern divided = Pattern.compile("divided");
     private final Pattern by = Pattern.compile("by");
+    private final Pattern print = Pattern.compile("Say");
     private final Pattern space = Pattern.compile(" ");
     private final Pattern dot = Pattern.compile("\\.");
     private final Pattern leftParen = Pattern.compile("\\(");
@@ -62,7 +63,7 @@ public class Tokenizer
     {
         Token token = null;
         
-        Pattern bite = Pattern.compile("[a-zA-Z0-9]+|[a-zA-Z0-9]+\\.[a-zA-Z0-9]+| |\\.|\\(|\\)");
+        Pattern bite = Pattern.compile("[a-zA-Z0-9]+|[a-zA-Z0-9]+\\.[a-zA-Z0-9]+| |\\.|\\(|\\)|-");
         Matcher matcher = bite.matcher(source);
         
         if (matcher.find())
@@ -97,11 +98,17 @@ public class Tokenizer
                 case String string when by.matcher(tokenText).matches():
                     token = new Token(TokenType.BY);
                     break;
+                case String string when print.matcher(tokenText).matches():
+                    token = new Token(TokenType.PRINT);
+                    break;
                 case String string when space.matcher(tokenText).matches():
                     token = new Token(TokenType.SPACE);
                     break;
                 case String string when dot.matcher(tokenText).matches():
                     token = new Token(TokenType.DOT);
+                    break;
+                case "-":
+                    token = new Token(TokenType.MINUS);
                     break;
                 default:
                     break;

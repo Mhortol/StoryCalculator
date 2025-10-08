@@ -23,12 +23,15 @@ public class Main
 
         Parser parser = new Parser(tokens);
 
-        Expression expression = parser.parse();
+        //Expression expression = parser.parseOld();
 
-        System.out.println(expression.toString());
+        ArrayList<Statement> statements = parser.parse();
 
-        Interpreter interpreter = new Interpreter(expression);
+        //System.out.println(expression.toString());
+        //Interpreter interpreter = new Interpreter(expression);
+        //System.out.println(interpreter.interpretOld());
 
-        System.out.println(interpreter.interpret());
+        Interpreter interpreter = new Interpreter();
+        interpreter.interpret(statements);
     }
 }

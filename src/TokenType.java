@@ -7,5 +7,7 @@ public enum TokenType
     //temporary word/text tokens
     INCREASED, DECREASED, MULTIPLIED, DIVIDED, BY, SPACE, DOT,
 
+    PRINT, VAR_NAME,
+
     EOF
 }
